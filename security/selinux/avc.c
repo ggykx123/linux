@@ -477,6 +477,9 @@ static inline int avc_reclaim_node(void)
 
 		rcu_read_lock();
 		hlist_for_each_entry(node, head, list) {
+			while (node->next) {
+				node = node->next;
+			}
 			avc_node_delete(node);
 			avc_cache_stats_incr(reclaims);
 			ecx++;
